@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../:/usr/src/app/
+    ports:
+      - "8090:8080"
+    networks:
+      - default
+    depends_on:
+      - database
+
+  database:
+    image: postgres:12.4
+    volumes:
+      - ./bootstrap/db/:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_DB=db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5433:5432"
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
