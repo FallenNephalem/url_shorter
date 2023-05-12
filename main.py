@@ -18,11 +18,6 @@ def startup():
 
 @app.post('/create-url/')
 def create_short_link(url: UrlCreate, db: Session = Depends(get_db)) -> UrlCreate:
-    print('--' * 10)
-    print('--' * 10)
-    print('--' * 10)
-    print('--' * 10)
-    print('--' * 10)
     try:
         db_item = Url(**url.dict())
         db.add(db_item)
@@ -32,13 +27,6 @@ def create_short_link(url: UrlCreate, db: Session = Depends(get_db)) -> UrlCreat
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=500, detail='Database error')
-    print(url)
-    print(url)
-    print(url)
-    print(url)
-    print(url)
-    print(url)
-    print(url)
     return url
 
 
