@@ -12,11 +12,7 @@ class UrlCreate(BaseModel):
     @validator('url')
     def name_must_contain_space(cls, value):
         parsed_url = urlparse(value)
-        print(parsed_url)
-        print('hhhhhhhhhhhhhherrrrrrrrrrrrrrr2')
-        print('hhhhhhhhhhhhhherrrrrrrrrrrrrrr2')
         if not parsed_url.scheme and not parsed_url.netloc:
-            print('hhhhhhhhhhhhhherrrrrrrrrrrrrrr')
             raise ValueError('Invalid URL')
         return value
 
